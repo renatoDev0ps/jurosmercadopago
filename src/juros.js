@@ -25,6 +25,6 @@ function calcular(){
     document.getElementById("id2").innerHTML=taxa + '%';
     document.getElementById("id4").innerHTML=res2;
   } else {
-    alert('Falso');
+    alert('Error');
   }
 }
