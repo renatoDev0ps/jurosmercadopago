@@ -1,36 +1,53 @@
-import React from 'react'
-import { KeyboardAvoidingView, Platform, Text, TextInput, StyleSheet, Image, TouchableOpacity } from 'react-native'
+import React, { useState } from 'react'
+import { SafeAreaView, View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
 
 import logo from '../assets/logo.png'
 
 export default function Main({ navigation }) {
+  const {
+    compra,
+    parcela,
+    res,
+    taxa,
+    Rtaxa,
+    Vparcela,
+    Jparcela,
+    Tcompra,
+    Ttaxa,
+    first,
+    fourteenth,
+    thirtienth
+  } = navigation.state.params.response
+
+  console.log(parseFloat(compra).toFixed(2).replace(".",","))
+
   function handleMain() {
+
     navigation.navigate('Resp')
   }
 
   return (
-    <KeyboardAvoidingView
-      behavior="padding"
-      enabled={Platform.OS === 'ios'}
-      style={styles.container}
-    >
+    <SafeAreaView style={styles.container}>
       <Image source={logo} style={styles.logo}/>
-      <TextInput 
-        placeholder="Digite o valor da compra"
-        placeholderTextColor="#999"
-        style={styles.input} 
-      />
-      <TextInput
-        autoCapitalize="none"
-        autoCorrect={false}
-        placeholder="Digite a quantidade de parcelas"
-        placeholderTextColor="#999"
-        style={styles.input} 
-      />
+      <View style={styles.cardsContainer}>
+        <View style={styles.card}>
+          <Text style={styles.textCard}>{'Valor da Compra R$ ' + parseFloat(compra).toFixed(2).replace(".",",")}</Text>
+          <Text style={styles.textCard}>{'Taxa de Juros ' + Rtaxa.toFixed(2).replace(".",",") + '%'}</Text>
+          <Text style={styles.textCard}>{'Valor Total R$ ' + res.toFixed(2).replace(".",",")}</Text>
+        </View>
+      </View>
+      <View style={styles.cardsContainer}>
+        <View style={styles.card}>
+          <Text style={styles.textCard}>{'Compra dividida em ' + parcela + ' parcelas'}</Text>
+          <Text style={styles.textCard}>{'Valor por Parcela R$ ' + Vparcela.toFixed(2).replace(".",",")}</Text>
+          <Text style={styles.textCard}>{'Taxa de Juros por parcela ' + Jparcela.toFixed(2).replace(".",",") + '%'}</Text>
+          <Text style={styles.textCard}>{'Valor Total dos Juros R$ ' + Tcompra.toFixed(2).replace(".",",")}</Text>
+        </View>
+      </View>
       <TouchableOpacity onPress={handleMain} style={styles.button}>
-        <Text style={styles.buttonText}>Vendedor</Text>
+        <Text style={styles.buttonText}>Informações do Vendedor</Text>
       </TouchableOpacity>
-    </KeyboardAvoidingView>
+    </SafeAreaView>
   )
 }
 
@@ -48,15 +65,30 @@ const styles = StyleSheet.create({
     height: 170,
   },
 
-  input: {
-    height: 46,
+  cardsContainer: {
+    flex: 1,
     alignSelf: 'stretch',
-    backgroundColor: '#fff',
+    justifyContent: 'center',
+    maxHeight: 100,
+  },
+
+  card: {
     borderWidth: 1,
-    borderColor: '#fff',
-    borderRadius: 4,
-    marginTop: 20,
-    paddingHorizontal: 15,
+    borderColor: '#01238b',
+    borderRadius: 8,
+    margin: 30,
+    overflow: 'hidden',
+    padding: 10,
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+  },
+
+  textCard: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#01238b',
   },
 
   button: {
