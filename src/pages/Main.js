@@ -8,27 +8,30 @@ export default function Main({ navigation }) {
     compra,
     parcela,
     res,
-    taxa,
     Rtaxa,
     Vparcela,
     Jparcela,
     Tcompra,
-    Ttaxa,
     first,
     fourteenth,
     thirtienth
   } = navigation.state.params.response
 
-  console.log(parseFloat(compra).toFixed(2).replace(".",","))
-
+  function handleReturn() {
+    navigation.navigate('Login')
+  }
+  
   function handleMain() {
+    const response = { res, first, fourteenth, thirtienth }
 
-    navigation.navigate('Resp')
+    navigation.navigate('Resp', { response })
   }
 
   return (
     <SafeAreaView style={styles.container}>
-      <Image source={logo} style={styles.logo}/>
+      <TouchableOpacity onPress={handleReturn}>
+        <Image source={logo} style={styles.logo}/>
+      </TouchableOpacity>
       <View style={styles.cardsContainer}>
         <View style={styles.card}>
           <Text style={styles.textCard}>{'Valor da Compra R$ ' + parseFloat(compra).toFixed(2).replace(".",",")}</Text>
@@ -55,7 +58,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#00aff1',
-    justifyContent: 'center',
+    justifyContent: 'space-evenly',
     alignItems: 'center',
     padding: 30,
   },
